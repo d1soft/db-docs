@@ -1,0 +1,169 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/db-docs/master/src/db-docs.config.json",
+    "title": "db-docs config",
+    "description": "db0docs configuration JSON schema",
+    "type": "object",
+    "properties": {
+        "databases": {
+            "description": "Database connection config",
+            "type": "array",
+            "items": { "$ref": "#/$defs/database" }
+        },
+        "templaters": {
+            "description": "Templaters configuration",
+            "type": "array",
+            "items": {
+                "oneOf": [
+                    { "enum": ["html", "ddl", "json", "yaml", "md", "confluence-wiki", "confluence-storage"] },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "html": { "$ref": "#/$defs/templater" },
+                            "confluence-wiki": { "$ref": "#/$defs/templater" },
+                            "confluence-storage": { "$ref": "#/$defs/templater" },
+                            "md": { "$ref": "#/$defs/templater" }
+                        }
+                    }
+                ]
+            }
+        },
+        "plugins": {
+            "description": "Plugins list names used in generation",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "output": {
+            "description": "Generated docs output path",
+            "type": "string"
+        }
+    },
+    "required": [ "databases" ],
+    "$defs": {
+        "database": {
+            "description": "Database configuration",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "Database output name",
+                    "type": "string"
+                },
+                "connection": {
+                    "description": "Explicit connection string",
+                    "type": "string"
+                },
+                "erd": {
+                    "description": "Generate ER diagram",
+                    "type": "boolean"
+                },
+                "ignoreTables": {
+                    "description": "Ignore tables list, this tables not be parsed to generated documentation",
+                    "type": "array",
+                    "item": {
+                        "type": "string"
+                    }
+                },
+                "envConfig": {
+                    "description": "Use external env file in database connection string",
+                    "$ref": "#/$defs/externalFileConfig"
+                },
+                "jsonConfig": {
+                    "description": "Use external json file in database connection string",
+                    "$ref": "#/$defs/externalFileConfig"
+                },
+                "yamlConfig": {
+                    "description": "Use external yaml file in database connection string",
+                    "$ref": "#/$defs/externalFileConfig"
+                },
+                "ssh": {
+                    "description": "Use ssh to connect database",
+                    "type": "object",
+                    "properties": {
+                        "host": {
+                            "description": "SSH connection port",
+                            "type": "string"
+                        },
+                        "port": {
+                            "description": "SSH connection port. Default to 22",
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 65535 
+                        },
+                        "username": {
+                            "description": "SSH connection username",
+                            "type": "string"
+                        },
+                        "password": {
+                            "description": "SSH connection password",
+                            "type": "string"
+                        },
+                        "privateKeyPath": {
+                            "description": "Path to private key. Only RSA private keys supported",
+                            "type": "string"
+                        },
+                        "privateKeyContent": {
+                            "description": "Private key content. Only RSA private keys supported",
+                            "type": "string"
+                        },
+                        "sourceHost": {
+                            "description": "",
+                            "type": "string"
+                        },
+                        "sourcePort": {
+                            "description": "",
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 65535 
+                        },
+                        "destinationHost": {
+                            "description": "",
+                            "type": "string"
+                        },
+                        "destinationPort": {
+                            "description": "",
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 65535 
+                        },
+                        "oneOf": [
+                            { "required": ["host", "username", "password"] },
+                            { "required": ["host", "username", "privateKeyContent"] },
+                            { "required": ["host", "username", "privateKeyPath"] }
+                        ]
+                    }
+                }
+            }
+        },
+        "templater": {
+            "description": "Templater extended configuration",
+            "type": "object",
+            "properties": {
+                "path": {
+                    "description": "Path to custom template",
+                    "type": "string"
+                },
+                "outputName": {
+                    "description": "Generated docs output file name",
+                    "type": "string"
+                }
+            },
+            "required": ["path"]
+        },
+        "externalFileConfig": {
+            "type": "object",
+            "properties": {
+                "path": {
+                    "description": "Path to file",
+                    "type": "string"
+                },
+                "connection": {
+                    "description": "Database connection string",
+                    "type": "string"
+                }
+            },
+            "required": ["path", "connection"]
+        }
+    }
+}
