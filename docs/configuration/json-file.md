@@ -11,7 +11,7 @@ If the specified variable name not found in environment file, configrator throws
 
 ## Example
 
-There is two files: example.json and my.schema-docs.config.json
+There is two files: example.json and my.db-docs.config.json
 ```js
 {
     "database": {

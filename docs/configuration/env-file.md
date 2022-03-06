@@ -10,7 +10,7 @@ If the specified variable name not found in environment file, configrator throws
 
 ## Example
 
-There is two files: example.env and my.schema-docs.config.json
+There is two files: example.env and my.db-docs.config.json
 ```
 DB_USER=username
 DB_PASSWORD=

@@ -16,7 +16,7 @@ Schema docs provided with the latest JSON schema. You can use it to simplify edi
     "json.schemas": [
         {
             "fileMatch": ["schema-docs.config.json"],
-            "url": "https://raw.githubusercontent.com/schema-docs/master/src/schema-docs.config.json"
+            "url": "https://raw.githubusercontent.com/db-docs/master/src/db-docs.config.json"
         }
     ],
 ```
