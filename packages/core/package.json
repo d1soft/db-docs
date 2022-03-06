@@ -1,0 +1,43 @@
+{
+  "name": "@db-docs/core",
+  "version": "0.0.1",
+  "description": "Database docs core package",
+  "main": "./dist/index.js",
+  "keywords": [
+    "db-docs"
+  ],
+  "scripts": {
+    "prepare": "pnpm build",
+    "build": "tsc -p tsconfig.build.json",
+    "test": "jest -c ./jest.config.js",
+    "eslint": "eslint --ext .ts ./src",
+    "eslint:fix": "eslint --fix --ext .ts ./src"
+  },
+  "repository": {
+    "type": "url",
+    "url": ""
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsc --noEmit && lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts}": [
+      "eslint --fix --ext .ts ./src",
+      "git add"
+    ]
+  },
+  "author": "d1soft",
+  "license": "gpl-2.0",
+  "dependencies": {
+    "date-fns": "2.28.0",
+    "mustache": "4.2.0",
+    "yaml": "1.10.2"
+  },
+  "devDependencies": {
+    "@db-docs/config": "workspace:0.0.1",
+    "@db-docs/logger": "workspace:0.0.1",
+    "@types/mustache": "4.1.2"
+  }
+}

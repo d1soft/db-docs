@@ -1,0 +1,42 @@
+{
+  "name": "@db-docs/cli",
+  "version": "0.0.1",
+  "description": "Database docs cli",
+  "main": "./dist/index.js",
+  "keywords": [
+    "db-docs"
+  ],
+  "bin": {
+    "db-docs": "./dist/index.js"
+  },
+  "scripts": {
+    "prepare": "pnpm build",
+    "build": "tsc -p tsconfig.build.json",
+    "test": "jest -c ./jest.config.js",
+    "eslint": "eslint --ext .ts ./src",
+    "eslint:fix": "eslint --fix --ext .ts ./src"
+  },
+  "repository": {
+    "type": "url",
+    "url": ""
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsc --noEmit && lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts}": [
+      "eslint --fix --ext .ts ./src",
+      "git add"
+    ]
+  },
+  "author": "d1soft",
+  "license": "gpl-2.0",
+  "dependencies": {
+    "@db-docs/config": "workspace:0.0.1",
+    "@db-docs/core": "workspace:0.0.1",
+    "@db-docs/logger": "workspace:0.0.1",
+    "commander": "9.0.0"
+  }
+}
